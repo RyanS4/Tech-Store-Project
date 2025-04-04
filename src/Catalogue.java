@@ -49,34 +49,34 @@ public class Catalogue {
         
     String tempPc = "";
     for (PC pc : cataloguePCs) {
-      tempPc += pc.toString();
+      tempPc += (pc.toString() + "\n");
     }
 
     String tempLaptop = "";
     for (Laptop laptop : catalogueLaptops) {
-      tempLaptop += laptop.toString();
+      tempLaptop += (laptop.toString() + "\n");
     }
 
     String tempMonitor = "";
     for (Monitor monitor : catalogueMonitors) {
-      tempMonitor += monitor.toString();
+      tempMonitor += (monitor.toString() + "\n");
     }
 
     String tempPhone = "";
     for (Phone phone : cataloguePhones) {
-      tempPhone += phone.toString();
+      tempPhone += (phone.toString() + "\n");
     }
 
     String tempTv = "";
     for (Tv tv : catalogueTvs) {
-      tempTv += tv.toString();
+      tempTv += (tv.toString() + "\n");
     }
 
     return (
-        tempPc + "\n" +
-        tempLaptop + "\n" +
-        tempMonitor + "\n" +
-        tempPhone + "\n" +
+        tempPc + "\n----------\n" +
+        tempLaptop + "\n----------\n" +
+        tempMonitor + "\n----------\n" +
+        tempPhone + "\n----------\n" +
         tempTv
         );
   }

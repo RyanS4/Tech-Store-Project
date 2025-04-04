@@ -30,10 +30,11 @@ public class Menu {
     System.out.println(
         "------Welcome " + cart.getCartName() + "!------\n" +
         "[1] View Catalogue\n" +
-        "[2] Add Item to Cart\n" +
-        "[3] Remove Item from Cart\n" +
-        "[4] Empty Cart\n" +
-        "[5] Checkout\n"
+        "[2] View Cart\n" +
+        "[3] Add Item to Cart\n" +
+        "[4] Remove Item from Cart\n" +
+        "[5] Empty Cart\n" +
+        "[6] Checkout\n"
         );
   }
 
@@ -41,7 +42,7 @@ public class Menu {
     int totalItems = 0;
     for (int i = 0; i < catalogue.getCataloguePCs().size(); i++) {
       System.out.print(
-        "[" + i + "]" +
+        "[" + (i + 1) + "]" +
         catalogue.getCataloguePCs().get(i).getName() +
         ", $" +
         catalogue.getCataloguePCs().get(i).getPrice() +
@@ -53,7 +54,7 @@ public class Menu {
 
     for (int i = 0; i < catalogue.getCatalogueLaptops().size(); i++) {
       System.out.print(
-        "[" + (i + totalItems) + "]" +
+        "[" + (i + totalItems + 1) + "]" +
         catalogue.getCatalogueLaptops().get(i).getName() +
         ", $" +
         catalogue.getCatalogueLaptops().get(i).getPrice() +
@@ -65,7 +66,7 @@ public class Menu {
 
     for (int i = 0; i < catalogue.getCatalogeMonitors().size(); i++) {
       System.out.print(
-        "[" + (i + totalItems) + "]" +
+        "[" + (i + totalItems + 1) + "]" +
         catalogue.getCatalogeMonitors().get(i).getName() +
         ", $" +
         catalogue.getCatalogeMonitors().get(i).getPrice() +
@@ -77,7 +78,7 @@ public class Menu {
 
     for (int i = 0; i < catalogue.getCatalogPhones().size(); i++) {
       System.out.print(
-        "[" + (i + totalItems) + "]" +
+        "[" + (i + totalItems + 1) + "]" +
         catalogue.getCatalogPhones().get(i).getName() +
         ", $" +
         catalogue.getCatalogPhones().get(i).getPrice() +
@@ -89,7 +90,7 @@ public class Menu {
 
     for (int i = 0; i < catalogue.getCatalogeTvs().size(); i++) {
       System.out.print(
-        "[" + (i + totalItems) + "]" +
+        "[" + (i + totalItems + 1) + "]" +
         catalogue.getCatalogeTvs().get(i).getName() +
         ", $" +
         catalogue.getCatalogeTvs().get(i).getPrice() +
@@ -133,20 +134,16 @@ public class Menu {
     System.out.print("Enter User to Delete: ");
     String tempName = scan.nextLine();
 
-    for (int i = 0; i < userCarts.size() - 1; i++) {
+    for (int i = 0; i < userCarts.size(); i++) {
       if ((userCarts.get(i).getCartName()).equals(tempName)) {
         userCarts.remove(i);
       }
     }
   }
 
-  public void clearCart () {
-    userCarts.clear();
-  }
-
   public void clearCart(String name) {
-    for (int i = 0; i < userCarts.size() -1; i++) {
-      if (userCarts.get(i).equals(name)) {
+    for (int i = 0; i < userCarts.size(); i++) {
+      if (userCarts.get(i).getCartName().equals(name)) {
         userCarts.get(i).empty();
       }
     }
@@ -157,6 +154,10 @@ public class Menu {
     System.out.println("Exiting...");
   }
 
+  public Catalogue getCatalogue() {
+      return catalogue;
+  }
+
   public void viewCatalogue () {
     catalogue.printCatalogue();
   }
@@ -165,10 +166,12 @@ public class Menu {
     for (Cart cart : userCarts) {
       if ((cart.getCartName()).equals(name)) {
         return cart;
+
+
       } 
     }
 
     Cart DEFAULTUSER = new Cart("Error: No User Found", 0);
     return DEFAULTUSER;
   }
-}                          
+}         

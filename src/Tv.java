@@ -6,7 +6,7 @@ public class Tv extends Monitor {
   public String toString () {
     return (
         super.toString() +
-        "Is a Tv: true"
+        "Is a Tv: true\n"
         );
   }
 }

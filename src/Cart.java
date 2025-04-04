@@ -170,9 +170,4 @@ public class Cart {
     printCart();
     empty();
   }
-
-  public void exit() {
-    System.out.println(toString());
-    System.out.println("Exiting user");
-  }
 }

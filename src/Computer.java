@@ -50,7 +50,6 @@ public class Computer extends Item {
   public String toString () {
     return (
         super.toString() +
-        "----------\n" +
         "GPU: " + GPU + "\n" +
         "CPU: " + CPU + "\n" +
         "RAM: " + ram + "\n" +
