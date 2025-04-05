@@ -2,6 +2,8 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        DatabaseManager.initializeDatabase();
+
         Scanner scan = new Scanner(System.in);
         Catalogue catalogue = new Catalogue();
         Menu menu = new Menu();
@@ -86,7 +88,11 @@ public class Main {
             } else if (userInput1 == 5) {
                 menu.deleteUser();
             } else {
-                menu.exit();
+                
+                for (Cart user : menu.getUserCarts()) {
+                  DatabaseManager.saveCartData(user);
+                }
+                System.out.println("Thank you for visiting!");
                 break;
             }
         }

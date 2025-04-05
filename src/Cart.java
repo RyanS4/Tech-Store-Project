@@ -19,6 +19,31 @@ public class Cart {
     this.tvList = new ArrayList<>();
   }
 
+  //getters
+  public Customer getUser () {
+    return user;
+  }
+
+  public ArrayList<PC> getPCList () {
+    return pcList;
+  }
+
+  public ArrayList<Laptop> getLaptopList () {
+    return laptopList;
+  }
+
+  public ArrayList<Monitor> getMonitorList () {
+    return monitorList;
+  }
+
+  public ArrayList<Phone> getPhoneList () {
+    return phoneList;
+  }
+
+  public ArrayList<Tv> getTvList () {
+    return tvList;
+  }
+
   public String getCartName () {
     return user.getCustomerName();
   }

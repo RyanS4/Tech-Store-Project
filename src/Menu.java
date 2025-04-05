@@ -149,11 +149,6 @@ public class Menu {
     }
   }
 
-  public void exit () {
-    userCarts.clear();
-    System.out.println("Exiting...");
-  }
-
   public Catalogue getCatalogue() {
       return catalogue;
   }
