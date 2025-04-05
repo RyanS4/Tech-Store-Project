@@ -114,5 +114,30 @@ public class Catalogue {
       catalogueTvs.get(option).setStock(catalogueTvs.get(option).getStock() - num);
     }
   }
+public static Item matchItem(String name, double price) {
+    Catalogue catalogue = new Catalogue(); // to access the full item list
+
+    for (PC pc : catalogue.getCataloguePCs()) {
+        if (pc.getName().equals(name) && pc.getPrice() == price) return pc;
+    }
+
+    for (Laptop laptop : catalogue.getCatalogueLaptops()) {
+        if (laptop.getName().equals(name) && laptop.getPrice() == price) return laptop;
+    }
+
+    for (Monitor monitor : catalogue.getCatalogeMonitors()) {
+        if (monitor.getName().equals(name) && monitor.getPrice() == price) return monitor;
+    }
+
+    for (Phone phone : catalogue.getCatalogPhones()) {
+        if (phone.getName().equals(name) && phone.getPrice() == price) return phone;
+    }
+
+    for (Tv tv : catalogue.getCatalogeTvs()) {
+        if (tv.getName().equals(name) && tv.getPrice() == price) return tv;
+    }
+
+    return null; // if not found
+}
   
 }

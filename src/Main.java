@@ -2,11 +2,14 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        DatabaseManager.initializeDatabase();
+
+    DatabaseManager.initializeDatabase();
+
+ArrayList<Cart> preloadedCarts = new ArrayList<>(DatabaseManager.loadCartData());
+    Menu menu = new Menu(preloadedCarts);
 
         Scanner scan = new Scanner(System.in);
         Catalogue catalogue = new Catalogue();
-        Menu menu = new Menu();
 
         while (true) {
             menu.displayMenu();

@@ -1,8 +1,8 @@
 import java.sql.*;
-import java.util.List;
+import java.util.*;
 
 public class DatabaseManager {
-    private static final String DB_URL = "jdbc:sqlite:tech_store.db";
+    private static final String DB_URL = "jdbc:sqlite:data/tech_store.db";
 
     public static void initializeDatabase() {
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -73,4 +73,44 @@ public class DatabaseManager {
         }
         stmt.executeBatch();
     }
+    public static List<Cart> loadCartData() {
+    ArrayList<Cart> carts = new ArrayList<>();
+
+    try (Connection conn = DriverManager.getConnection(DB_URL)) {
+        // Load users
+        PreparedStatement getUsers = conn.prepareStatement("SELECT username, budget FROM users");
+        ResultSet userResults = getUsers.executeQuery();
+
+        while (userResults.next()) {
+            String username = userResults.getString("username");
+            double budget = userResults.getDouble("budget");
+            Cart cart = new Cart(username, budget);
+
+            // Load items for this user
+            PreparedStatement getItems = conn.prepareStatement("SELECT item_name, price FROM cart_items WHERE username = ?");
+            getItems.setString(1, username);
+            ResultSet itemResults = getItems.executeQuery();
+
+            while (itemResults.next()) {
+                String name = itemResults.getString("item_name");
+                double price = itemResults.getDouble("price");
+
+                // Reconstruct item and determine type
+                Item item = Catalogue.matchItem(name, price);
+                if (item instanceof PC) cart.getPCList().add((PC)item);
+                else if (item instanceof Laptop) cart.getLaptopList().add((Laptop)item);
+                else if (item instanceof Monitor) cart.getMonitorList().add((Monitor)item);
+                else if (item instanceof Phone) cart.getPhoneList().add((Phone)item);
+                else if (item instanceof Tv) cart.getTvList().add((Tv)item);
+            }
+
+            carts.add(cart);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return carts;
+}
 }

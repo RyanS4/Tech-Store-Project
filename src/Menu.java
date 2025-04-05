@@ -14,6 +14,10 @@ public class Menu {
     return userCarts;
   }
 
+  public Menu(ArrayList<Cart> preloadedCarts) {
+    this.userCarts = preloadedCarts;
+  }
+
   public void displayMenu () {
     System.out.println(
         "-----Tech Store-----\n" +
