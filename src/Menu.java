@@ -122,8 +122,21 @@ public class Menu {
   }
 
   public void createUser () {
-    System.out.print("Username: ");
-    String tempName = scan.nextLine();
+    String tempName = "";
+    boolean repeat = false;
+    do {
+      repeat = false;
+      System.out.print("Username: ");
+      tempName = scan.nextLine();
+      
+      for (Cart user : userCarts) {
+        if (tempName.equals(user.getCartName())) {
+          System.out.print("Sorry! Username must be unique.\n");
+          repeat = true;
+        }
+      }
+
+    } while (repeat == true);
 
     System.out.print("Budget: ");
     double tempMoney = scan.nextDouble();
