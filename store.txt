@@ -1,0 +1,35 @@
+
+
+        /* We will discuss about layouts in the later sections
+         * of this tutorial. For now we are setting the layout 
+         * to null
+         */
+        panel.setLayout(null);
+
+        // Creating JLabel
+        JButton option1 = new JButton("Login");
+        JButton option2 = new JButton("Create New User");
+        JButton option3 = new JButton("View All Users");
+        JButton option4 = new JButton("View Specific User");
+        JButton option5 = new JButton("Delete User");
+        JButton option6 = new JButton("Exit");
+        /* This method specifies the location and size
+         * of component. setBounds(x, y, width, height)
+         * here (x,y) are cordinates from the top left 
+         * corner and remaining two arguments are the width
+         * and height of the component.
+         */
+        option1.setBounds(10,20,80,25);
+        option2.setBounds(10,30,80,25);
+        option3.setBounds(10,40,80,25);
+        option4.setBounds(10,50,80,25);
+        option5.setBounds(10,60,80,25);
+        option6.setBounds(10,70,80,25);
+        panel.add(option1);
+        panel.add(option2);
+        panel.add(option3);
+        panel.add(option4);
+        panel.add(option5);
+        panel.add(option6);
+
+    }

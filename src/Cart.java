@@ -59,26 +59,32 @@ public class Cart {
   public void addPC (int userSelection) {
     pcList.add(catalogue.getCataloguePCs().get(userSelection)); //adds a specific PC
     System.out.println("Added " + catalogue.getCataloguePCs().get(userSelection).getName() + " to cart."); // prints an 'added' notice
+    catalogue.changeNumPC(1, userSelection);
   }
 
   public void addLaptop (int userSelection) {
     laptopList.add(catalogue.getCatalogueLaptops().get(userSelection));
     System.out.println("Added " + catalogue.getCatalogueLaptops().get(userSelection).getName() + " to cart.");
+    catalogue.changeNumLaptop(1, userSelection);
   }
 
   public void addMonitor (int userSelection) {
     monitorList.add(catalogue.getCatalogeMonitors().get(userSelection));
     System.out.println("Added " + catalogue.getCatalogeMonitors().get(userSelection).getName() + " to cart.");
+    catalogue.changeNumMonitor(1, userSelection);
+      catalogue.changeNumMonitor(1, userSelection);
   }
   
   public void addPhone (int userSelection) {
     phoneList.add(catalogue.getCatalogPhones().get(userSelection));
     System.out.println("Added " + catalogue.getCatalogPhones().get(userSelection).getName() + " to cart.");
+    catalogue.changeNumPhone(1, userSelection);
   }
 
   public void addTv (int userSelection) {
     tvList.add(catalogue.getCatalogeTvs().get(userSelection));
     System.out.println("Added " + catalogue.getCatalogeTvs().get(userSelection).getName() + " to cart.");
+    catalogue.changeNumTv(1, userSelection);
   }
 
   public void deleteItem (String itemName) {

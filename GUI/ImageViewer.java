@@ -10,7 +10,7 @@ public class ImageViewer {
   }
 
   private void makeFrame() {
-    frame = new JFrame("ImageViewer");
+    frame = new JFrame("Tech Store");
     Container contentPane = frame.getContentPane();
 
     JLabel label = new JLabel("I am a label. I can display some text.");
