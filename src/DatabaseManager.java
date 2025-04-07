@@ -4,6 +4,18 @@ import java.util.*;
 public class DatabaseManager {
     private static final String DB_URL = "jdbc:sqlite:data/tech_store.db";
 
+    // Connect to the SQLite database
+    public Connection connect() {
+        String url = DB_URL; // Use the same URL as your database
+
+        try {
+            return DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println("Error connecting to database: " + e.getMessage());
+            return null;
+        }
+    }
+
     public static void initializeDatabase() {
         try (Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement()) {
@@ -13,6 +25,7 @@ public class DatabaseManager {
                 "CREATE TABLE IF NOT EXISTS users (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "username TEXT NOT NULL," +
+                "password TEXT NOT NULL," +
                 "budget REAL NOT NULL)"
             );
 
@@ -38,10 +51,11 @@ public class DatabaseManager {
             PreparedStatement deleteUser = conn.prepareStatement("DELETE FROM users WHERE username = ?");
             deleteUser.setString(1, cart.getCartName());
             deleteUser.executeUpdate();
-
-            PreparedStatement insertUser = conn.prepareStatement("INSERT INTO users (username, budget) VALUES (?, ?)");
+            
+            PreparedStatement insertUser = conn.prepareStatement("INSERT INTO users (username, password, budget) VALUES (?, ?, ?)");
             insertUser.setString(1, cart.getCartName());
-            insertUser.setDouble(2, cart.getUser().getMoney());  // If private, expose with a getter
+            insertUser.setString(2, cart.getUser().getPassword());
+            insertUser.setDouble(3, cart.getUser().getMoney());
             insertUser.executeUpdate();
 
             // Delete old cart items
@@ -73,44 +87,66 @@ public class DatabaseManager {
         }
         stmt.executeBatch();
     }
+
     public static List<Cart> loadCartData() {
-    ArrayList<Cart> carts = new ArrayList<>();
+        ArrayList<Cart> carts = new ArrayList<>();
 
-    try (Connection conn = DriverManager.getConnection(DB_URL)) {
-        // Load users
-        PreparedStatement getUsers = conn.prepareStatement("SELECT username, budget FROM users");
-        ResultSet userResults = getUsers.executeQuery();
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
+            // Load users
+            PreparedStatement getUsers = conn.prepareStatement("SELECT username, password, budget FROM users");
+            ResultSet userResults = getUsers.executeQuery();
 
-        while (userResults.next()) {
-            String username = userResults.getString("username");
-            double budget = userResults.getDouble("budget");
-            Cart cart = new Cart(username, budget);
+            while (userResults.next()) {
+                String username = userResults.getString("username");
+                String password = userResults.getString("password");
+                double budget = userResults.getDouble("budget");
+                Cart cart = new Cart(username, password, budget);
 
-            // Load items for this user
-            PreparedStatement getItems = conn.prepareStatement("SELECT item_name, price FROM cart_items WHERE username = ?");
-            getItems.setString(1, username);
-            ResultSet itemResults = getItems.executeQuery();
+                // Load items for this user
+                PreparedStatement getItems = conn.prepareStatement("SELECT item_name, price FROM cart_items WHERE username = ?");
+                getItems.setString(1, username);
+                ResultSet itemResults = getItems.executeQuery();
 
-            while (itemResults.next()) {
-                String name = itemResults.getString("item_name");
-                double price = itemResults.getDouble("price");
+                while (itemResults.next()) {
+                    String name = itemResults.getString("item_name");
+                    double price = itemResults.getDouble("price");
 
-                // Reconstruct item and determine type
-                Item item = Catalogue.matchItem(name, price);
-                if (item instanceof PC) cart.getPCList().add((PC)item);
-                else if (item instanceof Laptop) cart.getLaptopList().add((Laptop)item);
-                else if (item instanceof Monitor) cart.getMonitorList().add((Monitor)item);
-                else if (item instanceof Phone) cart.getPhoneList().add((Phone)item);
-                else if (item instanceof Tv) cart.getTvList().add((Tv)item);
+                    // Reconstruct item and determine type
+                    Item item = Catalogue.matchItem(name, price);
+                    if (item instanceof PC) cart.getPCList().add((PC)item);
+                    else if (item instanceof Laptop) cart.getLaptopList().add((Laptop)item);
+                    else if (item instanceof Monitor) cart.getMonitorList().add((Monitor)item);
+                    else if (item instanceof Phone) cart.getPhoneList().add((Phone)item);
+                    else if (item instanceof Tv) cart.getTvList().add((Tv)item);
+                }
+
+                carts.add(cart);
             }
 
-            carts.add(cart);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return carts;
     }
 
-    return carts;
-}
+    // Method to delete user
+    public void deleteUserFromDatabase(String username) {
+        String sql = "DELETE FROM users WHERE username = ?"; // Use lowercase 'users'
+
+        try (Connection conn = connect(); // Use the connect method
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("User deleted successfully.");
+            } else {
+                System.out.println("No user found with the username: " + username);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error deleting user: " + e.getMessage());
+        }
+    }
 }

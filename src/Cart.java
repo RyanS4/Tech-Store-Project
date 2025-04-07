@@ -10,8 +10,8 @@ public class Cart {
   private ArrayList <Phone> phoneList;
   private ArrayList <Tv> tvList;
 
-  public Cart (String name, double startMoney) {
-    this.user = new Customer (name, startMoney);
+  public Cart (String name, String pw, double startMoney) {
+    this.user = new Customer (name, pw, startMoney);
     this.pcList = new ArrayList<>();
     this.laptopList = new ArrayList<>();
     this.monitorList = new ArrayList<>();

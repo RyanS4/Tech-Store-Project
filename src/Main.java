@@ -3,29 +3,48 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
 
-    DatabaseManager.initializeDatabase();
+    DatabaseManager.initializeDatabase(); 
 
-ArrayList<Cart> preloadedCarts = new ArrayList<>(DatabaseManager.loadCartData());
+ArrayList<Cart> preloadedCarts = new ArrayList<>(DatabaseManager.loadCartData()); // Loads previous users from database
     Menu menu = new Menu(preloadedCarts);
 
         Scanner scan = new Scanner(System.in);
         Catalogue catalogue = new Catalogue();
 
-        while (true) {
-            menu.displayMenu();
-            System.out.print("Enter: ");
-            int userInput1 = scan.nextInt();
+        while (true) {  // Primary loop for displaying main menu
+            menu.displayMenu(); // Shows menu text
+            System.out.print("Enter: "); 
+            int userInput1 = scan.nextInt(); // Takes user choice for menu option
+            System.out.println("----------");
 
-            if (userInput1 == 1) {
-                menu.viewCurrentUsers();
+            if (userInput1 == 1) { 
+                menu.viewCurrentUsers(); // Prints list of current users
 
             } else if (userInput1 == 2) {
-                menu.viewSpecificUser();
+                menu.viewSpecificUser(); // Prints specific info from a specific user
 
             } else if (userInput1 == 3) {
+                boolean passAuth = false;
+                String tempName = "";
+                String tempPass = "";
+
+                do {    // Asks user to enter a username and password until a match is found in the list of users
                 System.out.print("Enter Username: ");
                 scan.nextLine(); // Fix to consume newline
-                String tempName = scan.nextLine();
+                tempName = scan.nextLine();
+
+                if (tempName.equals("exit")) {  // Returns to main menu if "exit" is entered for username
+                    break;
+                }
+                
+                System.out.print("Enter Password: ");
+                tempPass = scan.nextLine();
+                
+                if (menu.getUser(tempName).getUser().getPassword().equals(tempPass)) {  // Checks to see if the username and password belong to the same user
+                    passAuth = true;
+                }
+
+                } while (!passAuth);
 
                 while (true) {
                     menu.displayEditMenu(menu.getUser(tempName));

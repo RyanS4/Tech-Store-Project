@@ -108,6 +108,7 @@ public class Menu {
     for (Cart cart : userCarts) {
       System.out.println(cart.prevToString());
     }
+    System.out.println("----------");
   } 
 
   public void viewSpecificUser () {
@@ -126,8 +127,12 @@ public class Menu {
     boolean repeat = false;
     do {
       repeat = false;
-      System.out.print("Username: ");
+      System.out.print("Create Username: ");
       tempName = scan.nextLine();
+
+      if (tempName.equals("exit")) {
+        break;
+      }
       
       for (Cart user : userCarts) {
         if (tempName.equals(user.getCartName())) {
@@ -138,11 +143,14 @@ public class Menu {
 
     } while (repeat == true);
 
+    System.out.print("Create Password: ");
+    String tempPass = scan.nextLine();
+
     System.out.print("Budget: ");
     double tempMoney = scan.nextDouble();
     scan.nextLine();
     
-    Cart cart = new Cart(tempName, tempMoney);
+    Cart cart = new Cart(tempName, tempPass, tempMoney);
 
     userCarts.add(cart);
   }
@@ -151,11 +159,23 @@ public class Menu {
     System.out.print("Enter User to Delete: ");
     String tempName = scan.nextLine();
 
+    System.out.print("Enter User Password: ");
+    String tempPass = scan.nextLine();
+
+
+
     for (int i = 0; i < userCarts.size(); i++) {
-      if ((userCarts.get(i).getCartName()).equals(tempName)) {
+      if ((userCarts.get(i).getCartName()).equals(tempName) && userCarts.get(i).getUser().getPassword().equals(tempPass)) {
         userCarts.remove(i);
+
+        DatabaseManager db = new DatabaseManager();
+        db.deleteUserFromDatabase(tempName);
+        
+        return;
       }
     }
+
+    System.out.println("Error: Could not find user with this password.");
   }
 
   public void clearCart(String name) {
@@ -178,12 +198,9 @@ public class Menu {
     for (Cart cart : userCarts) {
       if ((cart.getCartName()).equals(name)) {
         return cart;
-
-
       } 
     }
 
-    Cart DEFAULTUSER = new Cart("Error: No User Found", 0);
-    return DEFAULTUSER;
+    return null;
   }
 }         
