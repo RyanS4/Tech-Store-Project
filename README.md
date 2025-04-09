@@ -6,6 +6,8 @@
 
 ## How to Run
 
+### Windows
+
 This compiles your code while including the SQLite JDBC driver in the classpath:
 
     javac -cp ".;sqlite-jdbc-3.49.1.0.jar" src\*.java
@@ -13,3 +15,13 @@ This compiles your code while including the SQLite JDBC driver in the classpath:
 Still in the same directory, run your program like this:
     
     java -cp ".;sqlite-jdbc-3.49.1.0.jar;src" Main
+
+### Linux / MacOS
+
+This compiles your code while including the SQLite JDBC driver in the classpath:
+
+    javac -cp ".:sqlite-jdbc-3.49.1.0.jar" src/*.java
+
+Still in the same directory, run your program like this:
+    
+    java -cp ".:sqlite-jdbc-3.49.1.0.jar:src" Main
