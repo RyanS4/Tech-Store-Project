@@ -1,5 +1,8 @@
 # Tech-Store-Project
-(Project) A functional menu for buying different items from an online store
+
+## What is it?
+
+(Project) A functional menu for buying different items from an online store. The Tech Store Project is an easy to use application designed for online shops to keep track of user accounts and a catalog of items set by the application manager. 
 
 ## How to Run
 
