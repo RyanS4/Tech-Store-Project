@@ -47,8 +47,28 @@ public class MainMenuInterface {
         viewUsersBtn.setFont(buttonFont);
         panel.add(viewUsersBtn);
 
+        JButton viewSpecificUserBtn = new JButton("View Specific User");
+        viewSpecificUserBtn.setBounds(150, 110, 200, 30);
+        viewSpecificUserBtn.setFont(buttonFont);
+        panel.add(viewSpecificUserBtn);
+
+        JButton loginBtn = new JButton("Login");
+        loginBtn.setBounds(150,150,200,30);
+        loginBtn.setFont(buttonFont);
+        panel.add(loginBtn);
+
+        JButton createNewUserBtn = new JButton("Create New User");
+        createNewUserBtn.setBounds(150,190,200,30);
+        createNewUserBtn.setFont(buttonFont);
+        panel.add(createNewUserBtn);
+        
+        JButton deleteUserBtn = new JButton("Delete User");
+        deleteUserBtn.setBounds(150,230,200,30);
+        deleteUserBtn.setFont(buttonFont);
+        panel.add(deleteUserBtn);
+
         JButton exitBtn = new JButton("Exit");
-        exitBtn.setBounds(150, 230, 200, 30);
+        exitBtn.setBounds(150, 290, 200, 30);
         exitBtn.setFont(buttonFont);
         exitBtn.setBackground(new Color(200, 50, 50));
         exitBtn.setForeground(Color.WHITE);
