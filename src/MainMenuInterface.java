@@ -22,14 +22,14 @@ public class MainMenuInterface {
         JPanel menuPanel = createMainMenuPanel();
         JPanel userListPanel = createUserListPanel();
         JPanel specificUserPanel = createSpecificUserPanel();
-        //JPanel loginPanel = createLoginPanel();
+        JPanel loginPanel = createLoginPanel();
         //JPanel makeUserPanel = createMakeUserPanel();
         //JPanel deleteUserPanel = createDeleteUserPanel();
 
         mainPanel.add(menuPanel, "menu");
         mainPanel.add(userListPanel, "userList");
         mainPanel.add(specificUserPanel, "specificUser");
-        //mainPanel.add(loginPanel, "login");
+        mainPanel.add(loginPanel, "login");
         //mainPanel.add(makeUserPanel, "makeUser");
         //mainPanel.add(deleteUserPanel, "deleteUser");
 
@@ -93,47 +93,16 @@ public class MainMenuInterface {
             cardLayout.show(mainPanel, "specificUser");
         });
 
+        loginBtn.addActionListener(e -> {
+            cardLayout.show(mainPanel, "login");
+        });
+
         exitBtn.addActionListener(e -> System.exit(0));
 
         return panel;
     }
 
-    private static JPanel createUserListPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.setBackground(Color.DARK_GRAY);
-
-        JLabel title = new JLabel("All Users", SwingConstants.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, 18));
-        title.setForeground(Color.WHITE);
-        panel.add(title, BorderLayout.NORTH);
-
-        // Simulated user data (replace this with actual loaded data)
-        ArrayList<String> users = new ArrayList<>();
-        
-
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        for (String user : users) {
-            listModel.addElement(user);
-        }
-
-        JList<String> userList = new JList<>(listModel);
-        userList.setFont(menuFont);
-        panel.add(new JScrollPane(userList), BorderLayout.CENTER);
-
-        JButton backBtn = new JButton("Back");
-        backBtn.setFont(menuFont);
-        backBtn.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
-
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setBackground(Color.DARK_GRAY);
-        bottomPanel.add(backBtn);
-        panel.add(bottomPanel, BorderLayout.SOUTH);
-
-        return panel;
-    }
-
-    public static JPanel createSpecificUserPanel() {
+    public static JPanel createUserListPanel() {
         // title panel (at top)
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -170,4 +139,82 @@ public class MainMenuInterface {
 
         return panel;
     }
+
+    private static JPanel createSpecificUserPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBackground(Color.DARK_GRAY);
+
+        JLabel title = new JLabel("All Users", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 18));
+        title.setForeground(Color.WHITE);
+        panel.add(title, BorderLayout.NORTH);
+
+        // Simulated user data (replace this with actual loaded data)
+        ArrayList<String> users = new ArrayList<>();
+        
+
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        for (String user : users) {
+            listModel.addElement(user);
+        }
+
+        JList<String> userList = new JList<>(listModel);
+        userList.setFont(menuFont);
+        panel.add(new JScrollPane(userList), BorderLayout.CENTER);
+
+        JButton backBtn = new JButton("Back");
+        backBtn.setFont(menuFont);
+        backBtn.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setBackground(Color.DARK_GRAY);
+        bottomPanel.add(backBtn);
+        panel.add(bottomPanel, BorderLayout.SOUTH);
+
+        return panel;
+    }
+    
+    public static JPanel createLoginPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBackground(Color.DARK_GRAY);
+
+        JLabel title = new JLabel("User Login");
+        title.setFont(menuFont);
+        title.setBackground(Color.WHITE);
+        panel.add(title, BorderLayout.NORTH);
+
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
+        formPanel.setBackground(Color.DARK_GRAY);
+    
+        // Username
+        JLabel userLabel = new JLabel("Username:");
+        userLabel.setForeground(Color.WHITE);
+        JTextField usernameField = new JTextField(15);
+        formPanel.add(userLabel);
+        formPanel.add(usernameField);
+    
+        // Password
+        JLabel passLabel = new JLabel("Password:");
+        passLabel.setForeground(Color.WHITE);
+        JPasswordField passwordField = new JPasswordField(15);
+        formPanel.add(passLabel);
+        formPanel.add(passwordField);
+    
+        panel.add(formPanel, BorderLayout.CENTER);
+
+        JButton backBtn = new JButton("Back");
+        backBtn.setFont(menuFont);
+        backBtn.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setBackground(Color.DARK_GRAY);
+        bottomPanel.add(backBtn);
+        panel.add(bottomPanel, BorderLayout.SOUTH);
+
+        return panel;
+    }
+
 }
