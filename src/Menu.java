@@ -130,7 +130,7 @@ public class Menu {
       System.out.print("Create Username: ");
       tempName = scan.nextLine();
 
-      if (tempName.equals("exit")) {
+      if (tempName.toLowerCase().equals("exit")) {
         break;
       }
       

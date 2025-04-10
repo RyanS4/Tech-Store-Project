@@ -106,16 +106,16 @@ ArrayList<Cart> preloadedCarts = new ArrayList<>(DatabaseManager.loadCartData())
 
             } else if (userInput1 == 4) {
                 menu.createUser();
-
             } else if (userInput1 == 5) {
                 menu.deleteUser();
-            } else {
-                
+            } else if (userInput1 == 6) {
                 for (Cart user : menu.getUserCarts()) {
                   DatabaseManager.saveCartData(user);
                 }
                 System.out.println("Thank you for visiting!");
                 break;
+            } else {
+                System.out.println("Error: Invalid Option");
             }
         }
 

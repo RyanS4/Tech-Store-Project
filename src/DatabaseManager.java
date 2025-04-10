@@ -88,7 +88,7 @@ public class DatabaseManager {
         stmt.executeBatch();
     }
 
-    public static List<Cart> loadCartData() {
+    public static ArrayList<Cart> loadCartData() {
         ArrayList<Cart> carts = new ArrayList<>();
 
         try (Connection conn = DriverManager.getConnection(DB_URL)) {

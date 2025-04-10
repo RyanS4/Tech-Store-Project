@@ -4,6 +4,8 @@ import java.util.*;
 
 public class MainMenuInterface {
 
+    private static final Font menuFont = new Font("Arial", Font.BOLD, 18);
+
     static CardLayout cardLayout;
     static JPanel mainPanel;
 
@@ -19,9 +21,17 @@ public class MainMenuInterface {
         // Panels for different screens
         JPanel menuPanel = createMainMenuPanel();
         JPanel userListPanel = createUserListPanel();
+        JPanel specificUserPanel = createSpecificUserPanel();
+        //JPanel loginPanel = createLoginPanel();
+        //JPanel makeUserPanel = createMakeUserPanel();
+        //JPanel deleteUserPanel = createDeleteUserPanel();
 
         mainPanel.add(menuPanel, "menu");
         mainPanel.add(userListPanel, "userList");
+        mainPanel.add(specificUserPanel, "specificUser");
+        //mainPanel.add(loginPanel, "login");
+        //mainPanel.add(makeUserPanel, "makeUser");
+        //mainPanel.add(deleteUserPanel, "deleteUser");
 
         frame.add(mainPanel);
         frame.setLocationRelativeTo(null);
@@ -79,6 +89,10 @@ public class MainMenuInterface {
             cardLayout.show(mainPanel, "userList");
         });
 
+        viewSpecificUserBtn.addActionListener(e -> {
+            cardLayout.show(mainPanel, "specificUser");
+        });
+
         exitBtn.addActionListener(e -> System.exit(0));
 
         return panel;
@@ -104,11 +118,49 @@ public class MainMenuInterface {
         }
 
         JList<String> userList = new JList<>(listModel);
-        userList.setFont(new Font("Arial", Font.PLAIN, 14));
+        userList.setFont(menuFont);
         panel.add(new JScrollPane(userList), BorderLayout.CENTER);
 
         JButton backBtn = new JButton("Back");
-        backBtn.setFont(new Font("Arial", Font.PLAIN, 14));
+        backBtn.setFont(menuFont);
+        backBtn.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setBackground(Color.DARK_GRAY);
+        bottomPanel.add(backBtn);
+        panel.add(bottomPanel, BorderLayout.SOUTH);
+
+        return panel;
+    }
+
+    public static JPanel createSpecificUserPanel() {
+        // title panel (at top)
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBackground(Color.DARK_GRAY);
+
+        JLabel title = new JLabel("View User", SwingConstants.CENTER);
+        title.setFont(menuFont);
+        panel.add(title, BorderLayout.NORTH);
+
+        // body panel (middle)
+        ArrayList<Cart> userList = DatabaseManager.loadCartData();
+        DefaultListModel<String> model = new DefaultListModel<>();
+
+        for (Cart cart : userList) {
+            model.addElement(cart.getCartName() + " | $" + cart.getUser().getMoney());
+        }
+    
+        JList<String> list = new JList<>(model);
+        list.setFont(new Font("Arial", Font.PLAIN, 14));
+        list.setBackground(Color.LIGHT_GRAY);
+        JScrollPane scrollPane = new JScrollPane(list);
+    
+        panel.add(scrollPane, BorderLayout.CENTER);
+
+        //  exit panel (bottom)
+        JButton backBtn = new JButton("Back");
+        backBtn.setFont(menuFont);
         backBtn.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
 
         JPanel bottomPanel = new JPanel();
