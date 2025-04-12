@@ -23,15 +23,15 @@ public class MainMenuInterface {
         JPanel userListPanel = createUserListPanel();
         JPanel specificUserPanel = createSpecificUserPanel();
         JPanel loginPanel = createLoginPanel();
-        //JPanel makeUserPanel = createMakeUserPanel();
-        //JPanel deleteUserPanel = createDeleteUserPanel();
+        JPanel makeUserPanel = createMakeUserPanel();
+        JPanel deleteUserPanel = createDeleteUserPanel();
 
         mainPanel.add(menuPanel, "menu");
         mainPanel.add(userListPanel, "userList");
         mainPanel.add(specificUserPanel, "specificUser");
         mainPanel.add(loginPanel, "login");
-        //mainPanel.add(makeUserPanel, "makeUser");
-        //mainPanel.add(deleteUserPanel, "deleteUser");
+        mainPanel.add(makeUserPanel, "makeUser");
+        mainPanel.add(deleteUserPanel, "deleteUser");
 
         frame.add(mainPanel);
         frame.setLocationRelativeTo(null);
@@ -97,6 +97,14 @@ public class MainMenuInterface {
             cardLayout.show(mainPanel, "login");
         });
 
+        createNewUserBtn.addActionListener(e -> {
+            cardLayout.show(mainPanel, "makeUser");
+        });
+
+        deleteUserBtn.addActionListener(e -> {
+            cardLayout.show(mainPanel, "deleteUser");
+        });
+
         exitBtn.addActionListener(e -> System.exit(0));
 
         return panel;
@@ -110,6 +118,7 @@ public class MainMenuInterface {
 
         JLabel title = new JLabel("View User", SwingConstants.CENTER);
         title.setFont(menuFont);
+        title.setForeground(Color.WHITE);
         panel.add(title, BorderLayout.NORTH);
 
         // body panel (middle)
@@ -180,9 +189,9 @@ public class MainMenuInterface {
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.DARK_GRAY);
 
-        JLabel title = new JLabel("User Login");
+        JLabel title = new JLabel("User Login", SwingConstants.CENTER);
         title.setFont(menuFont);
-        title.setBackground(Color.WHITE);
+        title.setForeground(Color.WHITE);
         panel.add(title, BorderLayout.NORTH);
 
         JPanel formPanel = new JPanel();
@@ -209,6 +218,37 @@ public class MainMenuInterface {
         backBtn.setFont(menuFont);
         backBtn.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
 
+        JButton loginUserBtn = new JButton("Login");
+        loginUserBtn.setFont(menuFont);
+
+
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.setBackground(Color.DARK_GRAY);
+        bottomPanel.add(backBtn, BorderLayout.WEST);
+        bottomPanel.add(loginUserBtn, BorderLayout.EAST);
+        panel.add(bottomPanel, BorderLayout.SOUTH);
+
+        return panel;
+    }
+
+    public static JPanel createMakeUserPanel () {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBackground(Color.DARK_GRAY);
+
+        JLabel title = new JLabel("Create New User", SwingConstants.CENTER);
+        title.setFont(menuFont);
+        title.setForeground(Color.WHITE);
+        panel.add(title, BorderLayout.NORTH);
+
+        JPanel makeUserPanel = new JPanel();
+        makeUserPanel.setLayout(new BorderLayout());
+        makeUserPanel.setBackground(Color.DARK_GRAY);
+
+        JButton backBtn = new JButton("Back");
+        backBtn.setFont(menuFont);
+        backBtn.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(Color.DARK_GRAY);
         bottomPanel.add(backBtn);
@@ -217,4 +257,26 @@ public class MainMenuInterface {
         return panel;
     }
 
+    public static JPanel createDeleteUserPanel () {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBackground(Color.DARK_GRAY);
+
+        JLabel title = new JLabel("Delete User", SwingConstants.CENTER);
+        title.setFont(menuFont);
+        title.setForeground(Color.WHITE);
+        panel.add(title, BorderLayout.NORTH);
+        
+        JButton backBtn = new JButton("Back");
+        backBtn.setFont(menuFont);
+        backBtn.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setBackground(Color.DARK_GRAY);
+        bottomPanel.add(backBtn);
+        panel.add(bottomPanel, BorderLayout.SOUTH);
+
+
+        return panel;
+    }
 }
